@@ -4,6 +4,15 @@ import time
 import functools
 import logging
 from datetime import datetime
+from win11toast import toast
+
+def notify(title, message):
+    try:
+        toast(title, message)
+    except Exception as e:
+        log_error(f"Toast notification failed: {e}")
+
+
 
 # Create logs directory if it doesn't exist
 LOG_DIR = "logs"
@@ -68,7 +77,13 @@ try:
 
     log_info("=== Pipeline Complete ===")
 
+    notify("Pipeline Complete", "SEC research pipeline finished successfully")
+
+
 except Exception as e:
     logging.exception("Pipeline failed")
+
+    notify("Pipeline Failed", "Check logs for details")
+
 
 
